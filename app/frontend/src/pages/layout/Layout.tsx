@@ -32,12 +32,14 @@ const Layout = () => {
                             </li>
                         </ul>
                     </nav>
-                    <h4 className={styles.headerRightText} onClick={() => (window.location.href = "https://example.com")}>
-                        Powered by Example.com
-                    </h4>
-                    <a href="https://example.com" target={"_blank"} title="Example.com link">
-                        <img src={logo} alt="Logo" aria-label="Link to example.com" width="20px" height="20px" className={styles.logo} />
-                    </a>
+                    <div>
+                        <h4 className={styles.headerRightText} onClick={() => (window.location.href = "https://example.com")}>
+                            Powered by Example.com
+                        </h4>
+                        <a href="https://example.com" target={"_blank"} title="Example.com link">
+                            <img src={logo} alt="Logo" aria-label="Link to example.com" width="20px" height="20px" className={styles.logo} />
+                        </a>
+                    </div>
                     {useLogin && <LoginButton />}
                 </div>
             </header>
