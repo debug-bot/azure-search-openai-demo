@@ -32,7 +32,7 @@ const Layout = () => {
                             </li>
                         </ul>
                     </nav>
-                    <div>
+                    <div className={styles.headerRight}>
                         <h4 className={styles.headerRightText} onClick={() => (window.location.href = "https://example.com")}>
                             Powered by Example.com
                         </h4>
