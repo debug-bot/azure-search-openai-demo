@@ -155,7 +155,7 @@ export function Component(): JSX.Element {
                     setFilesUploaded(false);
                     setFilesProcessing(false);
                     setFilesProcessed(false);
-                    setError("Something went wrong");
+                    setError("Some files not uploaded, try again!");
                 }
             },
             error: function (e) {
@@ -184,10 +184,18 @@ export function Component(): JSX.Element {
                     <p>Drag and drop files here or click to browse.</p>
                     <em>(Only *.pdf files will be accepted)</em>
                     <aside>
-                        <h4>Accepted files</h4>
-                        <ul>{acceptedFileItems}</ul>
-                        <h4>Rejected files</h4>
-                        <ul>{fileRejectionItems}</ul>
+                        {acceptedFileItems.length > 0 && (
+                            <>
+                                <h4>Accepted files</h4>
+                                <ul>{acceptedFileItems}</ul>
+                            </>
+                        )}
+                        {fileRejectionItems.length > 0 && (
+                            <>
+                                <h4>Rejected files</h4>
+                                <ul>{fileRejectionItems}</ul>
+                            </>
+                        )}
                     </aside>
                     {isLoading ? <p>Uploading...</p> : null}
                     {filesUploaded ? <p>Files uploaded!</p> : null}
