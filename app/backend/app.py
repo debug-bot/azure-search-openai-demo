@@ -204,8 +204,7 @@ async def ws():
         pass  # Ignore cancellation when the WebSocket connection is closed
     finally:
         # Cancel the background task when the WebSocket connection is closed
-        background_task_instance.cancel()
-    
+        pass    
     
 @bp.route("/upload", methods=["POST"])
 async def upload():
