@@ -17,3 +17,6 @@
     height: 25px;
     background-color: #2f341f;
 }
+.uploadError {
+    color: #ff1744;
+}

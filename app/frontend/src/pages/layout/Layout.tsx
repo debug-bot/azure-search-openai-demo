@@ -33,10 +33,10 @@ const Layout = () => {
                         </ul>
                     </nav>
                     <div className={styles.headerRight}>
-                        <h4 className={styles.headerRightText} onClick={() => (window.location.href = "https://example.com")}>
+                        <h4 className={styles.headerRightText} onClick={() => window.open("https://example.com", "_blank")}>
                             Powered by Example.com
                         </h4>
-                        <a href="https://example.com" target={"_blank"} title="Example.com link">
+                        <a href="https://example.com" target={"_blank"} title="https://example.com">
                             <img src={logo} alt="Logo" aria-label="Link to example.com" width="20px" height="20px" className={styles.logo} />
                         </a>
                     </div>

@@ -3,6 +3,7 @@ import { useRef, useState, useMemo } from "react";
 import styles from "./Upload.module.css";
 import { useDropzone } from "react-dropzone";
 import $ from "jquery";
+import { Link } from "react-router-dom";
 
 const WEBSOCKET_ENDPOINT = "ws://51.103.210.242/ws";
 
@@ -78,7 +79,9 @@ export function Component(): JSX.Element {
                 {file.name} - {sizeInMB} MB
                 <ul>
                     {errors.map(e => (
-                        <li key={e.code}>{e.message}</li>
+                        <li key={e.code} className={styles.uploadError}>
+                            Only PDF files are accepted!
+                        </li>
                     ))}
                 </ul>
             </li>
@@ -182,7 +185,9 @@ export function Component(): JSX.Element {
                 <div className={styles.uploadFiles} {...getRootProps({ style })}>
                     <input {...getInputProps()} name="file" />
                     <p>Drag and drop files here or click to browse.</p>
-                    <em>(Only *.pdf files will be accepted)</em>
+                    <em>
+                        <strong>(Only *.pdf files will be accepted)</strong>
+                    </em>
                     <aside>
                         {acceptedFileItems.length > 0 && (
                             <>
@@ -199,7 +204,7 @@ export function Component(): JSX.Element {
                     </aside>
                     {isLoading ? <p>Uploading...</p> : null}
                     {filesUploaded ? <p>Files uploaded!</p> : null}
-                    {error ? <p>Something went wrong!</p> : null}
+                    {error ? <p className={styles.uploadError}>Only PDF files supported, try again!</p> : null}
                     {filesProcessed ? <p>Files processed!</p> : null}
                     {filesProcessing ? <p>Files processing...</p> : null}
                     {isLoading || filesUploaded || filesProcessing || filesProcessed ? (
@@ -209,6 +214,11 @@ export function Component(): JSX.Element {
                     ) : null}
                 </div>
             </form>
+            {filesProcessed && (
+                <h4>
+                    Files uploaded and processed, Now you can <Link to="/">Chat</Link> or <Link to="/qa">Ask a question</Link>
+                </h4>
+            )}
         </div>
     );
 }
