@@ -43,7 +43,7 @@ export function Component(): JSX.Element {
     const [filesProcessing, setFilesProcessing] = useState<boolean>(false);
     const [error, setError] = useState<unknown>();
 
-    const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } = useDropzone({
+    const { acceptedFiles, fileRejections, getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } = useDropzone({
         onDrop: acceptedFiles => {
             setUploadedFiles(acceptedFiles);
             const formData = new FormData();
@@ -60,6 +60,29 @@ export function Component(): JSX.Element {
         onError(err) {
             setError("Only PDF files are accepted!");
         }
+    });
+
+    const acceptedFileItems = acceptedFiles.map(file => {
+        let sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+        return (
+            <li key={file.name}>
+                {file.name} - {sizeInMB} MB
+            </li>
+        );
+    });
+
+    const fileRejectionItems = fileRejections.map(({ file, errors }) => {
+        let sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+        return (
+            <li key={file.name}>
+                {file.name} - {sizeInMB} MB
+                <ul>
+                    {errors.map(e => (
+                        <li key={e.code}>{e.message}</li>
+                    ))}
+                </ul>
+            </li>
+        );
     });
 
     const style = useMemo<any>(
@@ -160,11 +183,12 @@ export function Component(): JSX.Element {
                     <input {...getInputProps()} name="file" />
                     <p>Drag and drop files here or click to browse.</p>
                     <em>(Only *.pdf files will be accepted)</em>
-                    <ul>
-                        {uploadedFiles!.map(file => (
-                            <li key={file.name}>{file.name}</li>
-                        ))}
-                    </ul>
+                    <aside>
+                        <h4>Accepted files</h4>
+                        <ul>{acceptedFileItems}</ul>
+                        <h4>Rejected files</h4>
+                        <ul>{fileRejectionItems}</ul>
+                    </aside>
                     {isLoading ? <p>Uploading...</p> : null}
                     {filesUploaded ? <p>Files uploaded!</p> : null}
                     {error ? <p>Something went wrong!</p> : null}
