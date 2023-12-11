@@ -5,7 +5,7 @@ import logging
 import mimetypes
 import os
 from pathlib import Path
-import time
+from datetime import datetime
 from typing import AsyncGenerator
 import subprocess
 
@@ -218,7 +218,9 @@ async def upload():
             if os.path.exists(f'../../data/{file.filename}'):
                 # get only name and not extension
                 name = file.filename.split('.')[0]
-                time_now = time.now()
+                time_now = datetime.now()
+                # format time to string till milliseconds
+                time_now = time_now.strftime("%d-%m-%Y_%H-%M-%S_%f")
                 await file.save(f'../../data/{name}_{time_now}.pdf')  # Save the file with new name
             else:
                 await file.save(f'../../data/{file.filename}')
