@@ -56,7 +56,10 @@ export function Component(): JSX.Element {
         accept: {
             "application/pdf": [".pdf"]
         },
-        multiple: true
+        multiple: true,
+        onError(err) {
+            setError("Only PDF files are accepted!");
+        }
     });
 
     const style = useMemo<any>(
@@ -73,6 +76,8 @@ export function Component(): JSX.Element {
         error && setError(undefined);
         setIsLoading(true);
         setFilesUploaded(false);
+        setFilesProcessing(false);
+        setFilesProcessed(false);
 
         $.ajax({
             url: `/upload`,

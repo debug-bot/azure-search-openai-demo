@@ -32,19 +32,17 @@ const Layout = () => {
                             </li>
                             <li className={styles.headerNavLeftMargin}>
                                 <a href="https://example.com" target={"_blank"} title="Example.com link">
-                                    <img
-                                        src={logo}
-                                        alt="Logo"
-                                        aria-label="Link to example.com"
-                                        width="20px"
-                                        height="20px"
-                                        className={styles.logo}
-                                    />
+                                    <img src={logo} alt="Logo" aria-label="Link to example.com" width="20px" height="20px" className={styles.logo} />
                                 </a>
                             </li>
                         </ul>
                     </nav>
-                    <h4 className={styles.headerRightText}>Powered by Example.com</h4>
+                    <h4 className={styles.headerRightText}>
+                        <a href="https://example.com">
+                            Powered by Example.com
+                            <img src={logo} alt="Logo" aria-label="Link to example.com" width="20px" height="20px" className={styles.logo} />
+                        </a>
+                    </h4>
                     {useLogin && <LoginButton />}
                 </div>
             </header>

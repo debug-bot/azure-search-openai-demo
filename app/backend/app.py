@@ -5,6 +5,7 @@ import logging
 import mimetypes
 import os
 from pathlib import Path
+import time
 from typing import AsyncGenerator
 import subprocess
 
@@ -174,7 +175,8 @@ async def index_documents_task():
     filename = 'prepdocs-test.sh'
     result = subprocess.run(['bash',f'../../scripts/{filename}'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     output = result.stdout.decode('utf-8')
-    print(output)
+    print('Script executed successfully, after files uploaded!')
+    print('Output: ', output)
     
     i=0
     while True:
@@ -213,7 +215,13 @@ async def upload():
     try:
         success = False
         for file in uploaded_files:
-            await file.save(f'../../data/{file.filename}')  # Save the file
+            if os.path.exists(f'../../data/{file.filename}'):
+                # get only name and not extension
+                name = file.filename.split('.')[0]
+                time_now = time.now()
+                await file.save(f'../../data/{name}_{time_now}.pdf')  # Save the file with new name
+            else:
+                await file.save(f'../../data/{file.filename}')
             success = True 
         
         return jsonify({'success':success, 'message': 'File uploaded successfully'})
